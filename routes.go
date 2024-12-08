@@ -40,7 +40,7 @@ func initializeRoutes() {
 			return
 		}
 
-		Weapons = append(Weapons, newWeapon)
+		AddWeapon(newWeapon)
 		ctx.JSON(http.StatusCreated, gin.H{"message": "Weapon created"})
 	})
 }

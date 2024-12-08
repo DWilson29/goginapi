@@ -60,6 +60,11 @@ func GetWeapon(id int) (Weapon, error) {
 	return weapon, nil
 }
 
+func AddWeapon(newWeapon Weapon) {
+	statement, _ := DB.Prepare("INSERT INTO weapons (type, name, damage, speed, reach) VALUES (? ? ? ? ?)")
+	statement.Exec(newWeapon.Type, newWeapon.Name, newWeapon.Damage, newWeapon.Speed, newWeapon.Reach)
+}
+
 var Weapons = []Weapon{
 	{Type: 0, Name: "Sword", Damage: 10, Speed: 10, Reach: 10},
 	{Type: 0, Name: "Longsword", Damage: 15, Speed: 5, Reach: 20},
