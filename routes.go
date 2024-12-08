@@ -9,7 +9,13 @@ import (
 
 func initializeRoutes() {
 	r.GET("/weapons", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{"weapons": Weapons})
+		weapons, err := AllWeapons()
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		ctx.JSON(http.StatusOK, gin.H{"weapons": weapons})
 	})
 	r.GET("/weapons/:id", func(ctx *gin.Context) {
 		id := ctx.Param("id")
@@ -35,5 +41,4 @@ func initializeRoutes() {
 		Weapons = append(Weapons, newWeapon)
 		ctx.JSON(http.StatusCreated, gin.H{"message": "Weapon created"})
 	})
-
 }

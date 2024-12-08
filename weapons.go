@@ -15,6 +15,7 @@ const (
 )
 
 type Weapon struct {
+	ID     int
 	Type   WeaponType
 	Name   string
 	Damage int
@@ -34,7 +35,7 @@ func AllWeapons() ([]Weapon, error) {
 	for rows.Next() {
 		var weapon Weapon
 
-		err := rows.Scan(&weapon.Type, &weapon.Name, &weapon.Damage, &weapon.Speed, &weapon.Reach)
+		err := rows.Scan(&weapon.ID, &weapon.Type, &weapon.Name, &weapon.Damage, &weapon.Speed, &weapon.Reach)
 		if err != nil {
 			return nil, err
 		}
