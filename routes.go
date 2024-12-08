@@ -24,11 +24,13 @@ func initializeRoutes() {
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		if idNum < 0 || idNum >= len(Weapons) {
-			ctx.JSON(http.StatusNotFound, gin.H{"error": "Index outside of weapons array"})
+
+		weapon, err := GetWeapon(idNum)
+		if err != nil {
+			ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 			return
 		}
-		ctx.JSON(http.StatusOK, gin.H{"weapon": Weapons[idNum]})
+		ctx.JSON(http.StatusOK, gin.H{"weapon": weapon})
 	})
 	r.POST("/weapons", func(ctx *gin.Context) {
 		var newWeapon Weapon

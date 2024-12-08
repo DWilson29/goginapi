@@ -49,6 +49,17 @@ func AllWeapons() ([]Weapon, error) {
 	return weapons, nil
 }
 
+func GetWeapon(id int) (Weapon, error) {
+	row := DB.QueryRow("SELECT * FROM weapons WHERE id = ?", id)
+
+	var weapon Weapon
+	err := row.Scan(&weapon.ID, &weapon.Type, &weapon.Name, &weapon.Damage, &weapon.Speed, &weapon.Reach)
+	if err != nil {
+		return weapon, err
+	}
+	return weapon, nil
+}
+
 var Weapons = []Weapon{
 	{Type: 0, Name: "Sword", Damage: 10, Speed: 10, Reach: 10},
 	{Type: 0, Name: "Longsword", Damage: 15, Speed: 5, Reach: 20},
